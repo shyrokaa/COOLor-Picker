@@ -8,4 +8,4 @@ This is a simple Python application built with PyQt5 that generates color palett
 - Display color palette in hexadecimal (hex) codes
 - Simple and user-friendly GUI built with PyQt5
 - Ability to copy hex codes to clipboard
-- Option to save generated color palettes to a file
+
