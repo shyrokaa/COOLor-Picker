@@ -1,0 +1,58 @@
+/* High Contrast QSS */
+
+/* Set the default background and foreground colors */
+QWidget {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* Set the background and foreground colors for specific widgets */
+QPushButton, QToolButton {
+    background-color: #333333;
+    color: #FFFFFF;
+}
+
+QLineEdit, QPlainTextEdit, QTextEdit, QComboBox, QSpinBox, QDoubleSpinBox,
+QSlider, QScrollBar, QCheckBox, QRadioButton, QGroupBox, QTabBar, QTabWidget {
+    background-color: #222222;
+    color: #FFFFFF;
+}
+
+QListView, QTreeView, QTableView, QPlainTextEdit, QTextEdit {
+    background-color: #333333;
+    color: #FFFFFF;
+    alternate-background-color: #444444;
+}
+
+QProgressBar {
+    background-color: #333333;
+    color: #FFFFFF;
+}
+
+QMenu {
+    background-color: #444444;
+    color: #FFFFFF;
+}
+
+QMenu::item:selected {
+    background-color: #555555;
+}
+
+QMenu::item:disabled {
+    color: #999999;
+}
+
+QMenuBar, QToolBar {
+    background-color: #222222;
+    color: #FFFFFF;
+}
+
+QStatusBar {
+    background-color: #111111;
+    color: #FFFFFF;
+}
+
+QToolTip {
+    background-color: #FFFFFF;
+    color: #000000;
+}
