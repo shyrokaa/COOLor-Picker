@@ -5,14 +5,20 @@ from PyQt5.QtTextToSpeech import QTextToSpeech
 from PyQt5 import QtWidgets, QtGui, uic, QtCore
 from random import randint
 
+<<<<<<< HEAD
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QToolTip
+=======
+from PyQt5.QtGui import QIcon, QGuiApplication
+from PyQt5.QtWidgets import QDesktopWidget
+>>>>>>> 9e50e8b0792ab1accf92787a57bc1aeedeffaaef
 
 from SettingsDialog import SettingsDialog
-
+from ResizeLibrary import *
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
+        global icon
         super(MainWindow, self).__init__()
 
         # Initialize the text-to-speech engine
@@ -51,7 +57,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.actionSettings.triggered.connect(self.settings_dialog)
 
         # apply the theme to the main window
-        self.setFixedSize(self.size())
+        # self.setFixedSize(self.size())
         self.load_theme()
 
     def settings_dialog(self):
@@ -92,7 +98,8 @@ class MainWindow(QtWidgets.QMainWindow):
                     color_saturation = self.adjust_saturation(color_saturation)
                     color_value = self.adjust_brightness(color_value)
 
-                    color = QtGui.QColor.fromHsv(color_hue, color_saturation, color_value)
+                    color = QtGui.QColor.fromHsv(int(color_hue), int(color_saturation), int(color_value))
+
                     colors.append(color)
 
             # Update the list view
@@ -172,6 +179,15 @@ class MainWindow(QtWidgets.QMainWindow):
             QtWidgets.QMessageBox.warning(self, "Error", "Failed to load config.json")
             theme_name = 'default.qss'  # Default theme name if config.json is malformed or invalid
 
+        # resizing and whatnot
+
+        # Set the window size
+        self.resize(int(400 * config['scale']), int(400 * config['scale']))
+
+        #set the button size
+        resize_button(self.copyButton,config['scale'])
+
+
         # Load and apply the theme
         self.apply_theme(theme_name)
 
@@ -206,6 +222,22 @@ class MainWindow(QtWidgets.QMainWindow):
             print(f"Error loading config.json: {e}")
             QtWidgets.QMessageBox.warning(self, "Error", "Failed to load config.json")
             theme_name = 'default.qss'  # Default theme name if config.json is malformed or invalid
+
+            # resizing and whatnot
+
+            # window size
+            self.resize(int(800 * config['scale']), int(600 * config['scale']))
+
+            # Set the font size of the listView and the copyButton
+            font = QtGui.QFont()
+            font.setPointSize(int(12 * config['scale']))
+            self.listView.setFont(font)
+            self.copyButton.setFont(font)
+
+            # Set the font size of the comboBox and the checkBox
+            font.setPointSize(int(10 * config['scale']))
+            self.comboBox.setFont(font)
+            self.checkBox.setFont(font)
 
         # Apply the updated theme
         self.apply_theme(theme_name)
