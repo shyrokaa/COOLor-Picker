@@ -1,9 +1,12 @@
 import json
 
+from PyQt5.QtTextToSpeech import QTextToSpeech
+
 from PyQt5 import QtWidgets, QtGui, uic, QtCore
-from random import randint, choice
+from random import randint
 
 from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QToolTip
 
 from SettingsDialog import SettingsDialog
 
@@ -11,6 +14,9 @@ from SettingsDialog import SettingsDialog
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+
+        # Initialize the text-to-speech engine
+        self.tts = QTextToSpeech(self)
 
         # Load the UI file
         uic.loadUi('main.ui', self)
@@ -54,6 +60,7 @@ class MainWindow(QtWidgets.QMainWindow):
             settings_window.exec_()
             self.update_theme()
         except Exception as e:
+            self.tts.say("error")
             print(f"An error occurred while opening the settings window: {e}")
             QtWidgets.QMessageBox.warning(self, "Error", "An error occurred while opening the settings window.")
 
@@ -97,6 +104,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 model.appendRow(item)
             self.listView.setModel(model)
         except Exception as e:
+            self.tts.say("error")
             print(f"An error occurred while generating the palette: {e}")
             QtWidgets.QMessageBox.warning(self, "Error", "An error occurred while generating the palette.")
 
@@ -125,6 +133,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.copyButton.setText("Copied to clipboard")
             QtCore.QTimer.singleShot(3000, lambda: self.copyButton.setText("Copy to clipboard"))
         except Exception as e:
+            self.tts.say("error")
             print(f"An error occurred while copying the palette to the clipboard: {e}")
             QtWidgets.QMessageBox.warning(self, "Error",
                                           "An error occurred while copying the palette to the clipboard.")
@@ -143,6 +152,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.listView.update(index)
             QtCore.QTimer.singleShot(3000, lambda: item.setText(original_text))
         except Exception as e:
+            self.tts.say("error")
             print(f"An error occurred while copying the color to the clipboard: {e}")
             QtWidgets.QMessageBox.warning(self, "Error", "An error occurred while copying the color to the clipboard.")
 
@@ -158,6 +168,7 @@ class MainWindow(QtWidgets.QMainWindow):
             theme_name = 'default.qss'  # Default theme name if config.json not found
         except json.JSONDecodeError as e:
             print(f"Error loading config.json: {e}")
+            self.tts.say("error")
             QtWidgets.QMessageBox.warning(self, "Error", "Failed to load config.json")
             theme_name = 'default.qss'  # Default theme name if config.json is malformed or invalid
 
@@ -174,9 +185,11 @@ class MainWindow(QtWidgets.QMainWindow):
                 style_data = f.read()
                 self.setStyleSheet(style_data)
         except FileNotFoundError:
+            self.tts.say("error")
             print(f"Error loading theme {theme_name}: File not found")
             QtWidgets.QMessageBox.warning(self, "Error", f"Failed to load theme {theme_name}")
         except Exception as e:
+            self.tts.say("error")
             print(f"Error loading theme {theme_name}: {e}")
             QtWidgets.QMessageBox.warning(self, "Error", f"Failed to load theme {theme_name}")
 
@@ -189,6 +202,7 @@ class MainWindow(QtWidgets.QMainWindow):
         except FileNotFoundError:
             theme_name = 'default.qss'  # Default theme name if config.json not found
         except json.JSONDecodeError as e:
+            self.tts.say("error")
             print(f"Error loading config.json: {e}")
             QtWidgets.QMessageBox.warning(self, "Error", "Failed to load config.json")
             theme_name = 'default.qss'  # Default theme name if config.json is malformed or invalid
