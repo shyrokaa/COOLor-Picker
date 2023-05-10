@@ -5,13 +5,11 @@ from PyQt5.QtTextToSpeech import QTextToSpeech
 from PyQt5 import QtWidgets, QtGui, uic, QtCore
 from random import randint
 
-<<<<<<< HEAD
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QToolTip
-=======
+
 from PyQt5.QtGui import QIcon, QGuiApplication
 from PyQt5.QtWidgets import QDesktopWidget
->>>>>>> 9e50e8b0792ab1accf92787a57bc1aeedeffaaef
 
 from SettingsDialog import SettingsDialog
 from ResizeLibrary import *
